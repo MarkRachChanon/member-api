@@ -418,3 +418,70 @@ npm run swagger
    - API Server: http://localhost:4000
 
 ---
+
+# Auto Generate Swagger ทุกครั้งที่แก้ไขไฟล์
+
+## ไฟล์ที่ต้องสร้าง/แก้ไข
+
+### 1. สร้างไฟล์ `nodemon.json`
+
+```json
+{
+  "watch": ["src"],
+  "ext": "js",
+  "ignore": ["swagger-output.json"],
+  "exec": "node swagger.js && node src/index.js"
+}
+```
+
+---
+
+### 2. แก้ไขไฟล์ `package.json`
+
+```json
+{
+  "name": "member-api",
+  "version": "1.0.0",
+  "description": "Member Management API",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "nodemon",
+    "swagger": "node swagger.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "^5.21.1",
+    "dotenv": "^16.4.5",
+    "express": "^4.18.2",
+    "mysql2": "^3.9.0",
+    "swagger-ui-express": "^5.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2",
+    "prisma": "^5.21.1",
+    "swagger-autogen": "^2.23.7"
+  }
+}
+```
+
+---
+
+## รันเซิร์ฟเวอร์
+
+```bash
+npm start
+```
+
+---
+
+## ผลลัพธ์
+
+ตอนนี้ทุกครั้งที่แก้ไขไฟล์ใน `src/` จะ:
+
+1. 🔄 **Auto Generate Swagger**
+2. 🚀 **Auto Restart Server**
+
+**ไม่ต้องรัน `npm run swagger` ด้วยตัวเองอีกต่อไป!** 🎉
